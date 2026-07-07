@@ -22,7 +22,18 @@ Arcade espacial de **un solo botón** (interfaz del juego en inglés). Tu cometa
 
 Puntuación = altura en metros + estrellas. El récord se guarda en el navegador.
 
-## Técnica
+## App iOS nativa (`apple/`)
+
+Port 100 % nativo con la infraestructura de juegos de Apple, listo para camino a App Store:
+
+- **Stack**: SpriteKit (motor 2D sobre Metal) + SwiftUI (menús/HUD) + AVAudioEngine (SFX sintetizados, categoría `.ambient` que respeta el switch de silencio) + Core Haptics (vibración con fallback) + GameKit (leaderboard).
+- **Detalles**: 120 Hz en pantallas ProMotion, física con substeps fijos a 120 Hz, respeta *Reduce Motion*, VoiceOver en botones, portrait, fuentes Unbounded/Chakra Petch empaquetadas (licencia OFL), ícono generado por código (`apple/scripts/GenerateIcon.swift`).
+- **Abrir**: `apple/Orbit.xcodeproj` en Xcode → elegir un simulador iPhone → Run.
+- **En tu iPhone**: en *Signing & Capabilities* selecciona tu equipo de desarrollo (bundle id `com.pattomm.orbit`).
+- **Publicar**: Product → Archive → distribuir a App Store Connect. Para el leaderboard de Game Center, crea en App Store Connect un leaderboard con id `orbit.best.score`.
+- **Depuración**: launch arguments `-autopilot` (juega solo y reintenta), `-turbo N` (acelera el tiempo ×N), `-slowretry`, `-gcoff` (desactiva Game Center).
+
+## Técnica (versión web)
 
 - Un solo archivo `index.html`: canvas 2D, física con substeps a 120 Hz, cero dependencias.
 - Sonido sintetizado en tiempo real con WebAudio (sin assets).

@@ -183,7 +183,12 @@ final class GameScene: SKScene {
         cameraY = cometPosition.y + visibleHeight * 0.10
         cam.position = CGPoint(x: Tunables.worldWidth / 2, y: cameraY)
         ensureSpawns()
+        applyCurrentSkin()
         model?.hudUpdate(meters: Int(metersMax), stars: starCount)
+    }
+
+    func applyCurrentSkin() {
+        comet.apply(skin: model?.cosmetics.equippedSkin ?? .default)
     }
 
     // MARK: - Entrada
@@ -639,7 +644,8 @@ final class GameScene: SKScene {
                 debugPrintTimer = 2
                 let state = model?.state.rawValue ?? "?"
                 print("[AUTO] state=\(state) m=\(Int(metersMax)) score=\(Int(metersMax) + starPoints) " +
-                      "stars=\(starCount) combo=\(combo) hops=\(hopCount) planets=\(planets.count) fps=\(Int(fpsAverage))")
+                      "stars=\(starCount) combo=\(combo) hops=\(hopCount) planets=\(planets.count) " +
+                      "wallet=\(model?.cosmetics.wallet ?? 0) fps=\(Int(fpsAverage))")
             }
         }
     }

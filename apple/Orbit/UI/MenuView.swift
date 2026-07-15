@@ -3,6 +3,16 @@ import SwiftUI
 struct MenuView: View {
     let model: GameModel
     @State private var appeared = false
+    @State private var showSkins = MenuView.opensSkinsAtLaunch
+
+    /// Solo en DEBUG: abre la tienda al arrancar para pruebas automatizadas.
+    private static var opensSkinsAtLaunch: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-openskins")
+        #else
+        false
+        #endif
+    }
 
     var body: some View {
         ZStack {
@@ -30,19 +40,48 @@ struct MenuView: View {
                 .padding(.vertical, 26)
 
                 PrimaryButton(title: "Play") { model.startGame() }
-                    .padding(.bottom, 16)
+                    .padding(.bottom, 14)
+
+                Button {
+                    showSkins = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Text("SKINS")
+                            .font(Theme.displayMedium(12))
+                            .kerning(1.8)
+                        Text("✦ \(model.cosmetics.wallet.grouped)")
+                            .font(Theme.bodyBold(13))
+                            .foregroundStyle(Theme.gold)
+                    }
+                    .foregroundStyle(Theme.text.opacity(0.85))
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 22)
+                    .background(
+                        Capsule()
+                            .fill(Color.white.opacity(0.06))
+                            .overlay(Capsule().stroke(Color.white.opacity(0.16), lineWidth: 1))
+                    )
+                }
+                .buttonStyle(ScaleButtonStyle())
 
                 if model.best > 0 {
                     Text("Best run: \(model.best.grouped) points")
                         .font(Theme.bodySemi(14))
                         .kerning(1)
                         .foregroundStyle(Theme.muted)
+                        .padding(.top, 16)
                 }
             }
             .padding(24)
             .opacity(appeared ? 1 : 0)
             .offset(y: appeared ? 0 : 16)
+
+            if showSkins {
+                SkinsView(model: model, isPresented: $showSkins)
+                    .transition(.opacity)
+            }
         }
+        .animation(.easeInOut(duration: 0.25), value: showSkins)
         .onAppear {
             withAnimation(.spring(response: 0.55, dampingFraction: 0.8)) { appeared = true }
         }

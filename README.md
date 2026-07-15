@@ -28,10 +28,11 @@ Port 100 % nativo con la infraestructura de juegos de Apple, listo para camino a
 
 - **Stack**: SpriteKit (motor 2D sobre Metal) + SwiftUI (menús/HUD) + AVAudioEngine (SFX sintetizados, categoría `.ambient` que respeta el switch de silencio) + Core Haptics (vibración con fallback) + GameKit (leaderboard).
 - **Detalles**: 120 Hz en pantallas ProMotion, física con substeps fijos a 120 Hz, respeta *Reduce Motion*, VoiceOver en botones, portrait, fuentes Unbounded/Chakra Petch empaquetadas (licencia OFL), ícono generado por código (`apple/scripts/GenerateIcon.swift`).
+- **Cosméticos (sin dinero real)**: las ✦ que recolectas se acumulan en una cartera y compran 8 skins de cometa (estelas y colores distintos). Progresión: el primero cae en ~3 partidas; **Prism**, con estela arcoíris, es la meta de largo plazo. No hay anuncios ni compras: el juego es enteramente gratis.
 - **Abrir**: `apple/Orbit.xcodeproj` en Xcode → elegir un simulador iPhone → Run.
 - **En tu iPhone**: en *Signing & Capabilities* selecciona tu equipo de desarrollo (bundle id `com.pattomm.orbit`).
 - **Publicar**: Product → Archive → distribuir a App Store Connect. Para el leaderboard de Game Center, crea en App Store Connect un leaderboard con id `orbit.best.score`.
-- **Depuración**: launch arguments `-autopilot` (juega solo y reintenta), `-turbo N` (acelera el tiempo ×N), `-slowretry`, `-gcoff` (desactiva Game Center).
+- **Depuración** (solo builds Debug; en Release se compilan fuera): `-autopilot` (juega solo y reintenta), `-turbo N` (acelera el tiempo ×N), `-slowretry`, `-gcoff` (desactiva Game Center), `-seedstars N` (cartera en N y colección a cero), `-buyskin <id>`, `-equipskin <id>`, `-openskins`, `-walletcheck`.
 
 ## Técnica (versión web)
 

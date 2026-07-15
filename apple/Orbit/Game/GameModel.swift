@@ -37,6 +37,7 @@ final class GameModel {
     }
 
     let scene: GameScene
+    let cosmetics = CosmeticsStore()
 
     @ObservationIgnored private var shownToasts: Set<HazardToast> = []
     @ObservationIgnored private var toastTask: Task<Void, Never>?
@@ -100,8 +101,33 @@ final class GameModel {
             UserDefaults.standard.set(best, forKey: "orbita_best")
         }
         GameCenterManager.shared.submit(score: summary.score)
+        cosmetics.earn(summary.stars)
         state = .gameOver
     }
+
+    // MARK: - Cosméticos
+    /// Compra (si hace falta y alcanza) o equipa el skin, y lo aplica en escena.
+    func selectSkin(_ skin: CometSkin) {
+        SoundEngine.shared.prepare()
+        if cosmetics.owns(skin) {
+            cosmetics.equip(skin)
+            SoundEngine.shared.playPluck(combo: 3)
+        } else if cosmetics.buy(skin) {
+            SoundEngine.shared.playDing(combo: 5)
+            HapticsEngine.shared.milestone()
+        } else {
+            return
+        }
+        scene.applyCurrentSkin()
+    }
+
+    #if DEBUG
+    func debugEquip(id: String) {
+        guard let skin = CometSkin.catalog.first(where: { $0.id == id }) else { return }
+        cosmetics.debugUnlock(skin)
+        scene.applyCurrentSkin()
+    }
+    #endif
 
     func hudUpdate(meters: Int, stars: Int) {
         if meters != self.meters { self.meters = meters }

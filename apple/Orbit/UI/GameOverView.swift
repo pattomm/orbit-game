@@ -44,6 +44,13 @@ struct GameOverView: View {
                     .foregroundStyle(Theme.text.opacity(0.8))
                     .padding(.top, 14)
 
+                if summary.stars > 0 {
+                    Text("+\(summary.stars) ✦ collected  ·  \(model.cosmetics.wallet.grouped) total")
+                        .font(Theme.bodySemi(13))
+                        .foregroundStyle(Theme.gold.opacity(0.85))
+                        .padding(.top, 8)
+                }
+
                 Group {
                     if model.newBest {
                         Text("★ NEW BEST! ★")

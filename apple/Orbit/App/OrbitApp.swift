@@ -56,8 +56,18 @@ struct ContentView: View {
         }
         .onAppear {
             GameCenterManager.shared.authenticate()
+            #if DEBUG
+            runDebugHooks()
+            #endif
             if isAutopilot { model.startGame() }
         }
+        #if DEBUG
+        .onChange(of: model.state) {
+            guard model.state == .gameOver,
+                  ProcessInfo.processInfo.arguments.contains("-walletcheck") else { return }
+            print("[WALLET] run stars=\(model.summary?.stars ?? 0) wallet=\(model.cosmetics.wallet)")
+        }
+        #endif
         .onChange(of: model.state) {
             // en modo autopilot, reintenta solo: prueba de larga duración
             guard isAutopilot, model.state == .gameOver else { return }
@@ -68,4 +78,27 @@ struct ContentView: View {
             }
         }
     }
+
+    #if DEBUG
+    /// Hooks para pruebas automatizadas vía launch arguments. No existen en Release.
+    private func runDebugHooks() {
+        let args = ProcessInfo.processInfo.arguments
+
+        // -buyskin <id>: ejercita la compra por el código real (cartera, propiedad, equipar)
+        if let i = args.firstIndex(of: "-buyskin"), i + 1 < args.count,
+           let skin = CometSkin.catalog.first(where: { $0.id == args[i + 1] }) {
+            let before = model.cosmetics.wallet
+            let ownedBefore = model.cosmetics.owns(skin)
+            model.selectSkin(skin)
+            print("[SHOP] buy=\(skin.id) price=\(skin.price) wallet:\(before)→\(model.cosmetics.wallet) " +
+                  "owned:\(ownedBefore)→\(model.cosmetics.owns(skin)) equipped=\(model.cosmetics.equippedID)")
+        }
+
+        // -equipskin <id>: fuerza un skin para inspeccionar su estela en pantalla
+        if let i = args.firstIndex(of: "-equipskin"), i + 1 < args.count {
+            model.debugEquip(id: args[i + 1])
+            print("[SHOP] force-equipped=\(model.cosmetics.equippedID)")
+        }
+    }
+    #endif
 }

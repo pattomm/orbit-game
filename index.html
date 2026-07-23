@@ -61,6 +61,37 @@ body[data-state="playing"] #hud,body[data-state="dying"] #hud,body[data-state="p
 #toast{position:absolute;bottom:calc(34px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:999px;padding:11px 22px;font-size:14px;font-weight:600;letter-spacing:.05em;white-space:nowrap;opacity:0;transition:opacity .3s,transform .3s}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ============ Skins ============ */
+.btn.skinsbtn{display:inline-flex;align-items:center;gap:9px;padding:13px 30px;font-size:12px;margin-top:14px}
+/* contador de estrellas total, fijo arriba del menú */
+.wallet-top{position:absolute;top:calc(18px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:var(--panel);border:1px solid rgba(255,201,77,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:15}
+.wallet-top .ico{color:var(--gold);font-size:15px;text-shadow:0 0 10px rgba(255,201,77,.6)}
+.wallet-top .val{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:16px;letter-spacing:.05em;color:var(--gold);text-shadow:0 0 12px rgba(255,201,77,.4)}
+.wallet-top .lbl{font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-left:2px}
+body[data-state="menu"] #wallet-top{display:inline-flex}
+#wallet-top{display:none}
+#screen-skins{display:none;z-index:20}
+body.shop #screen-skins{display:flex}
+.shopbox{width:min(430px,92vw);display:flex;flex-direction:column;align-items:stretch}
+.shophead{display:flex;align-items:center;gap:14px}
+.shophead h2{font-size:clamp(17px,4.5vw,22px);flex:1;text-align:left}
+.shophead .w{color:var(--gold);font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:16px;text-shadow:0 0 10px rgba(255,201,77,.45)}
+.shopsub{color:var(--muted);font-size:13px;text-align:left;margin:8px 0 18px}
+.skingrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;max-height:56vh;overflow-y:auto;padding:2px}
+.skincard{display:flex;flex-direction:column;align-items:center;gap:9px;padding:18px 10px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-family:"Chakra Petch",sans-serif;transition:transform .15s,border-color .2s}
+.skincard:hover{transform:translateY(-2px)}
+.skincard:active{transform:scale(.96)}
+.skincard.eq{border-color:rgba(107,247,255,.65);border-width:1.5px}
+.skincard.dim{opacity:.55}
+.skprev{width:56px;height:56px;border-radius:50%;position:relative;background:radial-gradient(circle,var(--c) 0%,transparent 72%)}
+.skprev.prism{background:conic-gradient(#6bf7ff,#b18cff,#ff8cc6,#ffc94d,#54e6a8,#6bf7ff);filter:blur(1px)}
+.skprev::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 8px 2px rgba(255,255,255,.6)}
+.skname{color:var(--text);font-weight:600;font-size:14px}
+.skstate{font-weight:700;font-size:11px;letter-spacing:.1em}
+.skstate.aqua{color:var(--aqua)}
+.skstate.gold{color:var(--gold)}
+.skstate.mut{color:var(--muted)}
+
 /* ============ Screens ============ */
 .screen{display:none;flex-direction:column;align-items:center;justify-content:center;gap:0;text-align:center;background:rgba(5,8,18,.58);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);padding:24px}
 body[data-state="menu"] #screen-start{display:flex}
@@ -147,6 +178,7 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
 </div>
 
 <div id="screen-start" class="layer screen">
+  <div id="wallet-top" class="wallet-top"><span class="ico">✦</span><span class="val" id="wallet-top-val">0</span><span class="lbl">estrellas</span></div>
   <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
     <circle cx="60" cy="60" r="17" fill="#ffc94d"/>
     <circle cx="54" cy="54" r="8" fill="rgba(255,255,255,.35)"/>
@@ -161,6 +193,7 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
     <span><i>✦</i>Hop fast to chain combos and stars</span>
   </div>
   <button id="btn-play" class="btn primary">Play</button>
+  <button id="btn-skins" class="btn ghost skinsbtn">Skins</button>
   <p id="best-line" class="best"></p>
 </div>
 
@@ -169,6 +202,7 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
   <p class="over-reason" id="over-reason"></p>
   <div class="score-big"><span id="over-score">0</span><span class="pts">Points</span></div>
   <p class="break" id="over-break"></p>
+  <p class="break" id="over-bank" style="color:var(--gold);font-size:13.5px;opacity:.9"></p>
   <p class="best" id="over-best"></p>
   <div class="row">
     <button id="btn-retry" class="btn primary">Retry</button>
@@ -184,6 +218,18 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
     <button id="btn-quit" class="btn ghost">Quit to menu</button>
   </div>
   <p class="hint">esc / p to resume</p>
+</div>
+
+<div id="screen-skins" class="layer screen">
+  <div class="shopbox">
+    <div class="shophead">
+      <h2>Comet skins</h2>
+      <span class="w" id="wallet-shop">✦ 0</span>
+      <button id="btn-shop-close" class="iconbtn" aria-label="Close">✕</button>
+    </div>
+    <p class="shopsub">Earn ✦ by collecting stars in your runs</p>
+    <div id="skingrid" class="skingrid"></div>
+  </div>
 </div>
 
 <script>
@@ -262,6 +308,84 @@ try {
   best = parseInt(localStorage.getItem('orbita_best') || '0', 10) || 0;
   muted = localStorage.getItem('orbita_muted') === '1';
 } catch (e) {}
+
+/* ---------------- cosméticos (paridad con la app iOS) ---------------- */
+const SKINS = [
+  { id: 'classic', name: 'Comet', price: 0, color: '#6bf7ff', style: 'classic' },
+  { id: 'ember', name: 'Ember', price: 60, color: '#ff6b5e', style: 'classic' },
+  { id: 'solar', name: 'Solar Flare', price: 60, color: '#ffc94d', style: 'classic' },
+  { id: 'nebula', name: 'Nebula', price: 200, color: '#b18cff', style: 'classic' },
+  { id: 'emerald', name: 'Emerald', price: 200, color: '#54e6a8', style: 'sparkle' },
+  { id: 'rose', name: 'Rose Quartz', price: 450, color: '#ff8cc6', style: 'bubble' },
+  { id: 'starlight', name: 'Starlight', price: 800, color: '#f5fAff', style: 'sparkle' },
+  { id: 'prism', name: 'Prism', price: 1200, color: '#6bf7ff', style: 'prism' }
+];
+const PRISM_CYCLE = Array.from({ length: 12 }, (_, i) => `hsl(${i * 30}, 100%, 72%)`);
+let wallet = 0, ownedSkins = new Set(['classic']), equippedSkin = 'classic';
+try {
+  wallet = parseInt(localStorage.getItem('orbita_wallet') || '0', 10) || 0;
+  JSON.parse(localStorage.getItem('orbita_owned') || '[]').forEach(id => ownedSkins.add(id));
+  equippedSkin = localStorage.getItem('orbita_skin') || 'classic';
+  if (!SKINS.some(s => s.id === equippedSkin)) equippedSkin = 'classic';
+} catch (e) {}
+const skinById = id => SKINS.find(s => s.id === id);
+const currentSkin = () => skinById(equippedSkin) || SKINS[0];
+const skinRGB = () => {
+  const h = parseInt(currentSkin().color.slice(1), 16);
+  return `${h >> 16},${(h >> 8) & 255},${h & 255}`;
+};
+/* color de brillo del cometa; Prism cicla por la paleta */
+function skinGlowColor() {
+  const s = currentSkin();
+  return s.style === 'prism' ? PRISM_CYCLE[Math.floor(performance.now() / 160) % 12] : s.color;
+}
+function saveCosmetics() {
+  try {
+    localStorage.setItem('orbita_wallet', String(wallet));
+    localStorage.setItem('orbita_owned', JSON.stringify([...ownedSkins]));
+    localStorage.setItem('orbita_skin', equippedSkin);
+  } catch (e) {}
+}
+function updateWalletUI() {
+  document.getElementById('wallet-top-val').textContent = fmt(wallet);
+  document.getElementById('wallet-shop').textContent = '✦ ' + fmt(wallet);
+}
+function renderShop() {
+  const grid = document.getElementById('skingrid');
+  grid.innerHTML = SKINS.map(s => {
+    const owned = ownedSkins.has(s.id), eq = equippedSkin === s.id, afford = wallet >= s.price;
+    const stateTxt = eq ? 'EQUIPPED' : owned ? 'TAP TO EQUIP' : '✦ ' + fmt(s.price);
+    const stateCls = eq ? 'aqua' : owned ? 'mut' : afford ? 'gold' : 'mut';
+    const cls = 'skincard' + (eq ? ' eq' : '') + (!owned && !afford ? ' dim' : '');
+    const prev = s.style === 'prism' ? 'skprev prism' : 'skprev';
+    const sty = s.style === 'prism' ? '' : ` style="--c:${s.color}"`;
+    return `<button class="${cls}" data-id="${s.id}" aria-label="${s.name}">` +
+      `<span class="${prev}"${sty}></span><span class="skname">${s.name}</span>` +
+      `<span class="skstate ${stateCls}">${stateTxt}</span></button>`;
+  }).join('');
+  grid.querySelectorAll('.skincard').forEach(b =>
+    b.addEventListener('click', () => selectSkin(skinById(b.dataset.id))));
+}
+function selectSkin(s) {
+  if (!s) return;
+  initAudio();
+  if (ownedSkins.has(s.id)) {
+    equippedSkin = s.id;
+    sfx.pluck(3);
+  } else if (wallet >= s.price) {
+    wallet -= s.price;
+    ownedSkins.add(s.id);
+    equippedSkin = s.id;
+    sfx.ding(5);
+  } else {
+    return;
+  }
+  saveCosmetics();
+  renderShop();
+  updateWalletUI();
+}
+function openShop() { renderShop(); updateWalletUI(); document.body.classList.add('shop'); }
+function closeShop() { document.body.classList.remove('shop'); }
 
 /* ---------------- canvas ---------------- */
 const canvas = document.getElementById('game');
@@ -502,7 +626,7 @@ function jump() {
   c.vx = ux * FLIGHT; c.vy = uy * FLIGHT;
   c.mode = 'fly'; c.flyT = 0;
   c.grace = { p: c.p, t: 0.28 };
-  burst(c.x, c.y, '#6bf7ff', 7, 90, 2.6);
+  burst(c.x, c.y, skinGlowColor(), 7, 90, 2.6);
   shake = Math.min(shake + 0.12, 0.5);
   sfx.whoosh();
 }
@@ -556,7 +680,7 @@ function die(reason) {
   if (state !== 'playing') return;
   deathReason = reason;
   state = 'dying'; setBodyState(); dieT = 0;
-  burst(comet.x, comet.y, '#6bf7ff', 26, 260, 3.6);
+  burst(comet.x, comet.y, skinGlowColor(), 26, 260, 3.6);
   burst(comet.x, comet.y, '#ffffff', 12, 160, 2.2);
   burst(comet.x, comet.y, '#ff6b5e', 10, 200, 3);
   shake = 1;
@@ -891,15 +1015,51 @@ function render() {
     const c = comet;
     ctx.globalCompositeOperation = 'lighter';
     const tr = c.trail;
+    const skin = currentSkin();
+    const rgb = skinRGB();
     ctx.lineCap = 'round';
     for (let i = 3; i < tr.length; i += 2) {
       const f = i / tr.length;
-      ctx.strokeStyle = `rgba(107,247,255,${f * f * .55})`;
-      ctx.lineWidth = (0.5 + 5 * f) * scale;
+      if (skin.style === 'prism') {
+        ctx.strokeStyle = `hsla(${(performance.now() / 12 + i * 9) % 360},100%,72%,${f * f * .6})`;
+        ctx.lineWidth = (0.5 + 5 * f) * scale;
+      } else if (skin.style === 'sparkle') {
+        ctx.strokeStyle = `rgba(${rgb},${f * f * .5})`;
+        ctx.lineWidth = (0.4 + 3 * f) * scale;
+      } else if (skin.style === 'bubble') {
+        ctx.strokeStyle = `rgba(${rgb},${f * f * .35})`;
+        ctx.lineWidth = (0.8 + 7.5 * f) * scale;
+      } else {
+        ctx.strokeStyle = `rgba(${rgb},${f * f * .55})`;
+        ctx.lineWidth = (0.5 + 5 * f) * scale;
+      }
       ctx.beginPath();
       ctx.moveTo(sx(tr[i - 3]), sy(tr[i - 2]));
       ctx.lineTo(sx(tr[i - 1]), sy(tr[i]));
       ctx.stroke();
+    }
+    if (skin.style === 'sparkle') {
+      for (let i = 5; i < tr.length; i += 6) {
+        const f = i / tr.length;
+        const tw = .3 + .7 * Math.abs(Math.sin(t * 9 + i * 2.1));
+        ctx.globalAlpha = f * tw * .9;
+        ctx.fillStyle = skin.color;
+        ctx.beginPath();
+        ctx.arc(sx(tr[i - 1]) + Math.sin(i * 37.7) * 6 * scale, sy(tr[i]) + Math.cos(i * 21.3) * 6 * scale,
+                (0.7 + f * 1.6) * scale, 0, TAU);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    } else if (skin.style === 'bubble') {
+      for (let i = 7; i < tr.length; i += 8) {
+        const f = i / tr.length;
+        ctx.globalAlpha = f * .4;
+        ctx.fillStyle = skin.color;
+        ctx.beginPath();
+        ctx.arc(sx(tr[i - 1]), sy(tr[i]), (1.6 + f * 3.4) * scale, 0, TAU);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
     }
     if (state !== 'dying') {
       // guía de tangente
@@ -916,7 +1076,7 @@ function render() {
         ctx.setLineDash([]);
       }
       const blink = c.invul > 0 ? .55 + .45 * Math.sin(t * 40) : 1;
-      drawGlow('#6bf7ff', c.x, c.y, 20, .75 * blink);
+      drawGlow(skinGlowColor(), c.x, c.y, 20, .75 * blink);
       ctx.fillStyle = `rgba(255,255,255,${blink})`;
       ctx.beginPath(); ctx.arc(sx(c.x), sy(c.y), 5.4 * scale, 0, TAU); ctx.fill();
     }
@@ -966,6 +1126,7 @@ function setBodyState() { document.body.dataset.state = state; }
 
 function startGame() {
   initAudio();
+  closeShop();
   worldReset(0);
   state = 'playing'; setBodyState();
   document.getElementById('combo').style.opacity = 0;
@@ -985,6 +1146,16 @@ function finishDeath() {
   const bEl = document.getElementById('over-best');
   bEl.textContent = newBest ? '★ NEW BEST! ★' : `Best run: ${fmt(best)} points`;
   bEl.classList.toggle('record', newBest);
+  // depositar las estrellas de la partida en la colección
+  const bankEl = document.getElementById('over-bank');
+  if (starCount > 0) {
+    wallet += starCount;
+    saveCosmetics();
+    updateWalletUI();
+    bankEl.textContent = `+${starCount} ✦ collected  ·  ${fmt(wallet)} total`;
+  } else {
+    bankEl.textContent = '';
+  }
 }
 function toMenu() {
   worldReset(0);
@@ -1039,7 +1210,8 @@ window.addEventListener('keydown', e => {
     e.preventDefault();
     primaryAction();
   } else if (e.code === 'Escape' || e.code === 'KeyP') {
-    if (state === 'playing') pauseGame();
+    if (document.body.classList.contains('shop')) closeShop();
+    else if (state === 'playing') pauseGame();
     else if (state === 'paused') resumeGame();
   } else if (e.code === 'KeyM') {
     setMuted(!muted);
@@ -1052,6 +1224,8 @@ document.getElementById('btn-resume').addEventListener('click', resumeGame);
 document.getElementById('btn-quit').addEventListener('click', toMenu);
 document.getElementById('btn-pause').addEventListener('click', () => { state === 'playing' ? pauseGame() : resumeGame(); });
 document.getElementById('btn-mute').addEventListener('click', () => setMuted(!muted));
+document.getElementById('btn-skins').addEventListener('click', openShop);
+document.getElementById('btn-shop-close').addEventListener('click', closeShop);
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(); });
 window.addEventListener('blur', () => pauseGame());
 
@@ -1070,11 +1244,15 @@ window.GAME = {
     };
   },
   setAutopilot(v) { autopilot = !!v; },
-  setTurbo(v) { turbo = clamp(v || 1, 1, 8); }
+  setTurbo(v) { turbo = clamp(v || 1, 1, 8); },
+  cosmetics() { return { wallet, owned: [...ownedSkins], equipped: equippedSkin }; },
+  addStars(n) { wallet += n | 0; saveCosmetics(); updateWalletUI(); renderShop(); },
+  equipSkin(id) { if (skinById(id)) { ownedSkins.add(id); equippedSkin = id; saveCosmetics(); updateWalletUI(); } }
 };
 
 /* ---------------- init ---------------- */
 setMuted(muted);
+updateWalletUI();
 toMenu();
 requestAnimationFrame(frame);
 </script>

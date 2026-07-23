@@ -17,6 +17,35 @@ struct MenuView: View {
     var body: some View {
         ZStack {
             OverlayBackdrop()
+
+            // total de estrellas, fijo en la parte de arriba
+            VStack {
+                HStack(spacing: 8) {
+                    Text("✦")
+                        .font(Theme.bodyBold(15))
+                        .foregroundStyle(Theme.gold)
+                        .shadow(color: Theme.gold.opacity(0.6), radius: 6)
+                    Text(model.cosmetics.wallet.grouped)
+                        .font(Theme.bodyBold(16))
+                        .foregroundStyle(Theme.gold)
+                        .monospacedDigit()
+                    Text("STARS")
+                        .font(Theme.bodySemi(10.5))
+                        .kerning(1.8)
+                        .foregroundStyle(Theme.muted)
+                }
+                .padding(.vertical, 9)
+                .padding(.horizontal, 20)
+                .background(
+                    Capsule()
+                        .fill(.ultraThinMaterial)
+                        .overlay(Capsule().stroke(Theme.gold.opacity(0.35), lineWidth: 1))
+                )
+                .padding(.top, 14)
+                Spacer()
+            }
+            .opacity(appeared ? 1 : 0)
+
             VStack(spacing: 0) {
                 EmblemView()
                     .padding(.bottom, 10)
@@ -42,27 +71,7 @@ struct MenuView: View {
                 PrimaryButton(title: "Play") { model.startGame() }
                     .padding(.bottom, 14)
 
-                Button {
-                    showSkins = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Text("SKINS")
-                            .font(Theme.displayMedium(12))
-                            .kerning(1.8)
-                        Text("✦ \(model.cosmetics.wallet.grouped)")
-                            .font(Theme.bodyBold(13))
-                            .foregroundStyle(Theme.gold)
-                    }
-                    .foregroundStyle(Theme.text.opacity(0.85))
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 22)
-                    .background(
-                        Capsule()
-                            .fill(Color.white.opacity(0.06))
-                            .overlay(Capsule().stroke(Color.white.opacity(0.16), lineWidth: 1))
-                    )
-                }
-                .buttonStyle(ScaleButtonStyle())
+                GhostButton(title: "Skins") { showSkins = true }
 
                 if model.best > 0 {
                     Text("Best run: \(model.best.grouped) points")

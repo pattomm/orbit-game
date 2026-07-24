@@ -18,30 +18,18 @@ struct MenuView: View {
         ZStack {
             OverlayBackdrop()
 
-            // total de estrellas, fijo en la parte de arriba
+            // total de estrellas, plano, fijo arriba a la derecha
             VStack {
-                HStack(spacing: 8) {
-                    Text("✦")
-                        .font(Theme.bodyBold(15))
-                        .foregroundStyle(Theme.gold)
-                        .shadow(color: Theme.gold.opacity(0.6), radius: 6)
-                    Text(model.cosmetics.wallet.grouped)
-                        .font(Theme.bodyBold(16))
+                HStack {
+                    Spacer()
+                    Text("✦ \(model.cosmetics.wallet.grouped)")
+                        .font(Theme.bodyBold(19))
                         .foregroundStyle(Theme.gold)
                         .monospacedDigit()
-                    Text("STARS")
-                        .font(Theme.bodySemi(10.5))
-                        .kerning(1.8)
-                        .foregroundStyle(Theme.muted)
+                        .shadow(color: Theme.gold.opacity(0.45), radius: 6)
+                        .padding(.top, 14)
+                        .padding(.trailing, 18)
                 }
-                .padding(.vertical, 9)
-                .padding(.horizontal, 20)
-                .background(
-                    Capsule()
-                        .fill(.ultraThinMaterial)
-                        .overlay(Capsule().stroke(Theme.gold.opacity(0.35), lineWidth: 1))
-                )
-                .padding(.top, 14)
                 Spacer()
             }
             .opacity(appeared ? 1 : 0)

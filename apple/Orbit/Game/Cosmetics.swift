@@ -24,19 +24,19 @@ struct CometSkin: Identifiable, Equatable {
     /// el primero cae en 2-4 partidas; Prism es la meta de largo plazo.
     static let catalog: [CometSkin] = [
         .default,
-        CometSkin(id: "ember", name: "Ember", price: 60,
+        CometSkin(id: "ember", name: "Ember", price: 90,
                   trailColor: UIColor(red: 1.00, green: 0.42, blue: 0.37, alpha: 1), style: .classic),
-        CometSkin(id: "solar", name: "Solar Flare", price: 60,
+        CometSkin(id: "solar", name: "Solar Flare", price: 90,
                   trailColor: Tunables.goldUI, style: .classic),
-        CometSkin(id: "nebula", name: "Nebula", price: 200,
+        CometSkin(id: "nebula", name: "Nebula", price: 90,
                   trailColor: Tunables.violet, style: .classic),
-        CometSkin(id: "emerald", name: "Emerald", price: 200,
+        CometSkin(id: "emerald", name: "Emerald", price: 90,
                   trailColor: UIColor(red: 0.33, green: 0.90, blue: 0.66, alpha: 1), style: .sparkle),
-        CometSkin(id: "rose", name: "Rose Quartz", price: 450,
+        CometSkin(id: "rose", name: "Rose Quartz", price: 90,
                   trailColor: UIColor(red: 1.00, green: 0.55, blue: 0.78, alpha: 1), style: .bubble),
-        CometSkin(id: "starlight", name: "Starlight", price: 800,
+        CometSkin(id: "starlight", name: "Starlight", price: 90,
                   trailColor: UIColor(red: 0.96, green: 0.98, blue: 1.00, alpha: 1), style: .sparkle),
-        CometSkin(id: "prism", name: "Prism", price: 1200,
+        CometSkin(id: "prism", name: "Prism", price: 90,
                   trailColor: Tunables.aqua, style: .prism)
     ]
 

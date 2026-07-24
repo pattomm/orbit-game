@@ -6,33 +6,45 @@ struct HUDView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            // info (no intercepta toques: el canvas recibe el tap de salto)
-            VStack(spacing: 0) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(alignment: .firstTextBaseline, spacing: 5) {
-                            Text("\(model.meters.grouped)")
-                                .font(Theme.display(30))
-                                .foregroundStyle(Theme.text)
-                                .shadow(color: Theme.aqua.opacity(0.35), radius: 9)
-                                .monospacedDigit()
-                            Text("m")
-                                .font(Theme.bodySemi(15))
-                                .foregroundStyle(Theme.muted)
-                        }
-                        Text("✦ \(model.stars)")
-                            .font(Theme.bodyBold(16))
-                            .kerning(1.2)
-                            .foregroundStyle(Theme.gold)
-                            .shadow(color: Theme.gold.opacity(0.45), radius: 6)
-                    }
-                    Spacer()
+            // altitud arriba a la izquierda
+            HStack(alignment: .top) {
+                HStack(alignment: .firstTextBaseline, spacing: 5) {
+                    Text("\(model.meters.grouped)")
+                        .font(Theme.display(30))
+                        .foregroundStyle(Theme.text)
+                        .shadow(color: Theme.aqua.opacity(0.35), radius: 9)
+                        .monospacedDigit()
+                    Text("m")
+                        .font(Theme.bodySemi(15))
+                        .foregroundStyle(Theme.muted)
                 }
                 Spacer()
             }
             .padding(.horizontal, 20)
-            .padding(.top, 12)
+            .padding(.top, 14)
             .allowsHitTesting(false)
+
+            // estrellas (plano) + botones, siempre arriba a la derecha
+            HStack(alignment: .top) {
+                Spacer()
+                VStack(alignment: .trailing, spacing: 12) {
+                    Text("✦ \(model.stars)")
+                        .font(Theme.bodyBold(19))
+                        .foregroundStyle(Theme.gold)
+                        .shadow(color: Theme.gold.opacity(0.45), radius: 6)
+                        .monospacedDigit()
+                        .allowsHitTesting(false)
+                    HStack(spacing: 10) {
+                        IconButton(systemName: "pause.fill", label: "Pause") { model.pause() }
+                        IconButton(systemName: model.muted ? "speaker.slash.fill" : "speaker.wave.2.fill",
+                                   label: model.muted ? "Unmute" : "Mute") {
+                            model.muted.toggle()
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 14)
 
             // combo
             if model.combo >= 2 {
@@ -45,18 +57,6 @@ struct HUDView: View {
                     .allowsHitTesting(false)
                     .transition(.scale(scale: 2.1).combined(with: .opacity))
             }
-
-            // botones
-            HStack(spacing: 10) {
-                Spacer()
-                IconButton(systemName: "pause.fill", label: "Pause") { model.pause() }
-                IconButton(systemName: model.muted ? "speaker.slash.fill" : "speaker.wave.2.fill",
-                           label: model.muted ? "Unmute" : "Mute") {
-                    model.muted.toggle()
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 12)
 
             // aviso de peligro nuevo
             VStack {

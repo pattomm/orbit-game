@@ -61,16 +61,24 @@ body[data-state="playing"] #hud,body[data-state="dying"] #hud,body[data-state="p
 #toast{position:absolute;bottom:calc(34px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:999px;padding:11px 22px;font-size:14px;font-weight:600;letter-spacing:.05em;white-space:nowrap;opacity:0;transition:opacity .3s,transform .3s}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ============ Skins ============ */
-.btn.skinsbtn{display:inline-flex;align-items:center;gap:9px;padding:13px 30px;font-size:12px;margin-top:14px}
+/* ============ Progresión / Skins ============ */
+.menu-actions{display:flex;gap:10px;margin-top:14px;align-items:center;justify-content:center}
+.btn.menubtn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;font-size:12px}
+.claim-badge{display:none;min-width:20px;height:20px;padding:0 6px;align-items:center;justify-content:center;border-radius:999px;background:var(--gold);color:#071018;font-family:"Chakra Petch",sans-serif;font-size:11px;font-weight:700;letter-spacing:0;box-shadow:0 0 14px rgba(255,201,77,.5)}
+.claim-badge.on{display:inline-flex}
 /* contador de estrellas total, fijo arriba del menú */
 .wallet-top{position:absolute;top:calc(14px + env(safe-area-inset-top));right:18px;display:inline-flex;align-items:center;gap:6px;z-index:15}
 .wallet-top .ico{color:var(--gold);font-size:17px;text-shadow:0 0 10px rgba(255,201,77,.6)}
 .wallet-top .val{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:19px;letter-spacing:.05em;color:var(--gold);text-shadow:0 0 12px rgba(255,201,77,.4)}
+.menu-sound{position:absolute;top:calc(14px + env(safe-area-inset-top));left:18px;z-index:15;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);border-radius:13px;background:var(--panel);color:var(--text);font:600 12px "Chakra Petch",sans-serif;letter-spacing:.04em;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.menu-sound:hover{background:rgba(255,255,255,.1)}
+.menu-sound:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}
+.menu-sound-icon{font-size:17px;line-height:1}
 body[data-state="menu"] #wallet-top{display:inline-flex}
 #wallet-top{display:none}
 #screen-skins{display:none;z-index:20}
 body.shop #screen-skins{display:flex}
+body.objectives #screen-objectives{display:flex}
 .shopbox{width:min(430px,92vw);display:flex;flex-direction:column;align-items:stretch}
 .shophead{display:flex;align-items:center;gap:14px}
 .shophead h2{font-size:clamp(17px,4.5vw,22px);flex:1;text-align:left}
@@ -90,6 +98,32 @@ body.shop #screen-skins{display:flex}
 .skstate.aqua{color:var(--aqua)}
 .skstate.gold{color:var(--gold)}
 .skstate.mut{color:var(--muted)}
+
+/* ============ Objectives ============ */
+#screen-objectives{display:none;z-index:20}
+.objectivebox{width:min(470px,94vw);display:flex;flex-direction:column;align-items:stretch}
+.objective-intro{color:var(--muted);font-size:13px;text-align:left;margin:8px 2px 16px;line-height:1.45}
+.objective-list{display:flex;flex-direction:column;gap:11px;max-height:63vh;overflow-y:auto;padding:2px 3px 12px}
+.objective-card{position:relative;display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;flex:0 0 auto;padding:15px;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.025));overflow:hidden;text-align:left}
+.objective-card.daily{border-color:rgba(177,140,255,.42);background:radial-gradient(circle at 12% 20%,rgba(107,247,255,.12),transparent 38%),linear-gradient(135deg,rgba(177,140,255,.16),rgba(255,201,77,.055) 72%,rgba(255,255,255,.025));box-shadow:inset 0 0 34px rgba(177,140,255,.07)}
+.objective-card.daily::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 18%,rgba(255,255,255,.055) 45%,transparent 70%);pointer-events:none}
+.objective-card.ready{border-color:rgba(255,201,77,.48);box-shadow:inset 0 0 28px rgba(255,201,77,.05)}
+.objective-card.claimed{opacity:.62}
+.objective-icon{width:46px;height:46px;border-radius:15px;display:flex;align-items:center;justify-content:center;color:var(--aqua);font-size:21px;background:rgba(107,247,255,.07);border:1px solid rgba(107,247,255,.16);text-shadow:0 0 12px rgba(107,247,255,.65)}
+.objective-card.ready .objective-icon{color:var(--gold);background:rgba(255,201,77,.08);border-color:rgba(255,201,77,.2);text-shadow:0 0 12px rgba(255,201,77,.65)}
+.objective-copy{min-width:0}
+.objective-title{font-family:"Unbounded",sans-serif;font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--text)}
+.daily-label{display:inline-flex;align-items:center;gap:5px;margin-bottom:5px;color:#d7c7ff;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.daily-reset{color:#9ca9c9;font-variant-numeric:tabular-nums}
+.objective-desc{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.3}
+.objective-track{height:4px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:9px}
+.objective-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--aqua),var(--gold));box-shadow:0 0 8px rgba(107,247,255,.45)}
+.objective-progress{margin-top:5px;color:#c6d2ef;font-size:10px;font-weight:600;letter-spacing:.08em}
+.objective-reward{min-width:65px;text-align:center}
+.reward-value{display:block;color:var(--gold);font-size:13px;font-weight:700;white-space:nowrap;text-shadow:0 0 10px rgba(255,201,77,.35)}
+.claim-btn{margin-top:7px;padding:7px 10px;border-radius:999px;border:0;background:var(--gold);color:#071018;font:700 10px "Chakra Petch",sans-serif;letter-spacing:.08em;cursor:pointer;box-shadow:0 0 13px rgba(255,201,77,.3)}
+.claim-btn:active{transform:scale(.94)}
+.claimed-mark{display:block;margin-top:7px;color:var(--aqua);font-size:10px;font-weight:700;letter-spacing:.08em}
 
 /* ============ Screens ============ */
 .screen{display:none;flex-direction:column;align-items:center;justify-content:center;gap:0;text-align:center;background:rgba(5,8,18,.58);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);padding:24px}
@@ -151,11 +185,15 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
   #hud-alt{font-size:25px}
   #hud-stars{font-size:17px}
   #combo{top:calc(58px + env(safe-area-inset-top));font-size:17px}
+  .objective-card{grid-template-columns:40px 1fr auto;padding:13px 11px;gap:10px}
+  .objective-icon{width:40px;height:40px;border-radius:13px}
 }
 @media (max-height:620px){
   .emblem{width:70px;height:70px;margin-bottom:2px}
   .howto{margin:14px 0 18px}
   .score-big{margin-top:8px}
+  .menu-actions{margin-top:10px}
+  .btn.menubtn{padding:10px 18px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01s !important;animation-iteration-count:1 !important}
@@ -171,13 +209,14 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
   <div id="combo"></div>
   <div class="hud-btns">
     <button id="btn-pause" class="iconbtn" aria-label="Pause">❚❚</button>
-    <button id="btn-mute" class="iconbtn" aria-label="Sound">🔊</button>
+    <button id="btn-mute" class="iconbtn" aria-label="Turn sound off">🔊</button>
   </div>
   <div id="toast"></div>
 </div>
 
 <div id="screen-start" class="layer screen">
   <div id="wallet-top" class="wallet-top"><span class="ico">✦</span><span class="val" id="wallet-top-val">0</span></div>
+  <button id="btn-menu-sound" class="menu-sound" type="button" aria-pressed="true"><span id="menu-sound-icon" class="menu-sound-icon" aria-hidden="true">🔊</span><span id="menu-sound-label">Sound on</span></button>
   <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
     <circle cx="60" cy="60" r="17" fill="#ffc94d"/>
     <circle cx="54" cy="54" r="8" fill="rgba(255,255,255,.35)"/>
@@ -192,7 +231,10 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
     <span><i>✦</i>Hop fast to chain combos and stars</span>
   </div>
   <button id="btn-play" class="btn primary">Play</button>
-  <button id="btn-skins" class="btn ghost skinsbtn">Skins</button>
+  <div class="menu-actions">
+    <button id="btn-skins" class="btn ghost menubtn">Skins</button>
+    <button id="btn-objectives" class="btn ghost menubtn">Objectives <span id="objective-badge" class="claim-badge">0</span></button>
+  </div>
   <p id="best-line" class="best"></p>
 </div>
 
@@ -228,6 +270,18 @@ h2{font-family:"Unbounded",sans-serif;font-weight:800;font-size:clamp(26px,6vw,3
     </div>
     <p class="shopsub">Earn ✦ by collecting stars in your runs</p>
     <div id="skingrid" class="skingrid"></div>
+  </div>
+</div>
+
+<div id="screen-objectives" class="layer screen">
+  <div class="objectivebox">
+    <div class="shophead">
+      <h2>Objectives</h2>
+      <span class="w" id="wallet-objectives">✦ 0</span>
+      <button id="btn-objectives-close" class="iconbtn" aria-label="Close">✕</button>
+    </div>
+    <p class="objective-intro">Complete milestones and today's signal, then claim their star rewards.</p>
+    <div id="objective-list" class="objective-list"></div>
   </div>
 </div>
 
@@ -294,7 +348,7 @@ let state = 'menu'; // menu | playing | dying | dead | paused
 let planets = [], starsPick = [], bhs = [], parts = [], texts = [];
 let comet = null;
 let camY = 0, camYT = 0, shake = 0, tSim = 0;
-let metersMax = 0, starPts = 0, starCount = 0, combo = 0, hopCount = 0, lastMile = 0;
+let metersMax = 0, starPts = 0, starCount = 0, combo = 0, runMaxCombo = 0, hopCount = 0, lastMile = 0;
 let spawnY = 0, bhDebt = 9999;
 let deathReason = '', newBest = false, deadSince = 0, dieT = 0, timeScale = 1;
 let autopilot = false, turbo = 1;
@@ -317,7 +371,7 @@ const SKINS = [
   { id: 'emerald', name: 'Emerald', price: 90, color: '#54e6a8', style: 'sparkle' },
   { id: 'rose', name: 'Rose Quartz', price: 90, color: '#ff8cc6', style: 'bubble' },
   { id: 'starlight', name: 'Starlight', price: 90, color: '#f5fAff', style: 'sparkle' },
-  { id: 'prism', name: 'Prism', price: 90, color: '#6bf7ff', style: 'prism' }
+  { id: 'prism', name: 'Prism', price: 1000, color: '#6bf7ff', style: 'prism' }
 ];
 const PRISM_CYCLE = Array.from({ length: 12 }, (_, i) => `hsl(${i * 30}, 100%, 72%)`);
 let wallet = 0, ownedSkins = new Set(['classic']), equippedSkin = 'classic';
@@ -345,9 +399,179 @@ function saveCosmetics() {
     localStorage.setItem('orbita_skin', equippedSkin);
   } catch (e) {}
 }
+
+/* ---------------- objetivos persistentes ---------------- */
+const OBJECTIVES = [
+  { id: 'first_run', icon: '◉', title: 'First Contact', desc: 'Complete your first run', metric: 'runs', target: 1, reward: 15 },
+  { id: 'star_scout', icon: '✦', title: 'Star Scout', desc: 'Collect 15 stars across all runs', metric: 'stars', target: 15, reward: 30 },
+  { id: 'orbit_chain', icon: '∞', title: 'Chain Reaction', desc: 'Reach a ×5 combo', metric: 'bestCombo', target: 5, reward: 40 },
+  { id: 'pathfinder', icon: '↗', title: 'Pathfinder', desc: 'Complete 40 orbital hops', metric: 'hops', target: 40, reward: 50 },
+  { id: 'high_flyer', icon: '△', title: 'High Flyer', desc: 'Reach an altitude of 750 m', metric: 'bestMeters', target: 750, reward: 75 },
+  { id: 'deep_space', icon: '✺', title: 'Deep Space', desc: 'Reach an altitude of 1,800 m', metric: 'bestMeters', target: 1800, reward: 120 }
+];
+const DAILY_CHALLENGES = [
+  { id: 'star_hunt', icon: '✦', title: 'Star Hunt', desc: 'Collect 8 stars today', metric: 'stars', mode: 'sum', target: 8, reward: 35 },
+  { id: 'orbit_sprint', icon: '↗', title: 'Orbit Sprint', desc: 'Complete 20 orbital hops today', metric: 'hops', mode: 'sum', target: 20, reward: 40 },
+  { id: 'combo_signal', icon: '∞', title: 'Combo Signal', desc: 'Reach a ×4 combo in one run', metric: 'combo', mode: 'max', target: 4, reward: 45 },
+  { id: 'upper_atmosphere', icon: '△', title: 'Upper Atmosphere', desc: 'Reach 500 m in one run', metric: 'meters', mode: 'max', target: 500, reward: 50 },
+  { id: 'score_burst', icon: '◎', title: 'Score Burst', desc: 'Score 800 points in one run', metric: 'score', mode: 'max', target: 800, reward: 55 }
+];
+let objectiveStats = { runs: 0, stars: 0, hops: 0, bestMeters: 0, bestCombo: 0 };
+let claimedObjectives = new Set();
+let dailyState = { date: '', progress: 0, claimed: false };
+try {
+  const storedRaw = localStorage.getItem('orbita_objective_stats');
+  const storedStats = JSON.parse(storedRaw || '{}');
+  for (const key of Object.keys(objectiveStats)) {
+    const value = Number(storedStats[key]);
+    if (Number.isFinite(value) && value >= 0) objectiveStats[key] = Math.floor(value);
+  }
+  // Migración inicial: reconoce las estrellas que el jugador aún conserva.
+  if (!storedRaw) objectiveStats.stars = wallet;
+  const storedClaims = JSON.parse(localStorage.getItem('orbita_objective_claimed') || '[]');
+  if (Array.isArray(storedClaims)) storedClaims.forEach(id => claimedObjectives.add(id));
+  const storedDaily = JSON.parse(localStorage.getItem('orbita_daily_challenge') || '{}');
+  if (storedDaily && typeof storedDaily === 'object') {
+    dailyState.date = typeof storedDaily.date === 'string' ? storedDaily.date : '';
+    dailyState.progress = Math.max(0, Math.floor(Number(storedDaily.progress) || 0));
+    dailyState.claimed = storedDaily.claimed === true;
+  }
+} catch (e) {}
+function saveObjectives() {
+  try {
+    localStorage.setItem('orbita_objective_stats', JSON.stringify(objectiveStats));
+    localStorage.setItem('orbita_objective_claimed', JSON.stringify([...claimedObjectives]));
+  } catch (e) {}
+}
+const utcDayKey = (date = new Date()) => date.toISOString().slice(0, 10);
+const utcDayNumber = (date = new Date()) => Math.floor(date.getTime() / 86400000);
+const dailyChallenge = (date = new Date()) => DAILY_CHALLENGES[((utcDayNumber(date) % DAILY_CHALLENGES.length) + DAILY_CHALLENGES.length) % DAILY_CHALLENGES.length];
+function saveDailyChallenge() {
+  try { localStorage.setItem('orbita_daily_challenge', JSON.stringify(dailyState)); } catch (e) {}
+}
+function ensureDailyChallenge(date = new Date()) {
+  const key = utcDayKey(date);
+  if (dailyState.date === key) return false;
+  dailyState = { date: key, progress: 0, claimed: false };
+  saveDailyChallenge();
+  return true;
+}
+function dailyResetText(date = new Date()) {
+  const next = (utcDayNumber(date) + 1) * 86400000;
+  const minutes = Math.max(0, Math.ceil((next - date.getTime()) / 60000));
+  const hours = Math.floor(minutes / 60);
+  return `resets in ${hours}h ${String(minutes % 60).padStart(2, '0')}m`;
+}
+function dailyReady() {
+  ensureDailyChallenge();
+  return dailyState.progress >= dailyChallenge().target && !dailyState.claimed;
+}
+function dailyRunValue(challenge) {
+  if (challenge.metric === 'stars') return starCount;
+  if (challenge.metric === 'hops') return hopCount;
+  if (challenge.metric === 'combo') return runMaxCombo;
+  if (challenge.metric === 'meters') return Math.round(metersMax);
+  return Math.round(metersMax) + starPts;
+}
+function recordDailyChallenge() {
+  ensureDailyChallenge();
+  const challenge = dailyChallenge();
+  const value = dailyRunValue(challenge);
+  dailyState.progress = challenge.mode === 'sum' ? dailyState.progress + value : Math.max(dailyState.progress, value);
+  saveDailyChallenge();
+}
+const objectiveValue = objective => objectiveStats[objective.metric] || 0;
+const objectiveReady = objective => objectiveValue(objective) >= objective.target && !claimedObjectives.has(objective.id);
+function readyObjectiveCount() { return OBJECTIVES.filter(objectiveReady).length + (dailyReady() ? 1 : 0); }
+function updateObjectiveUI() {
+  const count = readyObjectiveCount();
+  const badge = document.getElementById('objective-badge');
+  badge.textContent = count;
+  badge.classList.toggle('on', count > 0);
+  document.getElementById('wallet-objectives').textContent = '✦ ' + fmt(wallet);
+}
+function renderObjectives() {
+  ensureDailyChallenge();
+  const list = document.getElementById('objective-list');
+  const challenge = dailyChallenge();
+  const dailyProgress = Math.min(100, dailyState.progress / challenge.target * 100);
+  const dailyAction = dailyState.claimed
+    ? '<span class="claimed-mark">CLAIMED</span>'
+    : dailyReady()
+      ? '<button class="claim-btn daily-claim-btn">CLAIM</button>'
+      : '';
+  const dailyCard = `<article class="objective-card daily${dailyReady() ? ' ready' : ''}${dailyState.claimed ? ' claimed' : ''}">` +
+    `<div class="objective-icon">${challenge.icon}</div>` +
+    `<div class="objective-copy"><div class="daily-label">Daily signal · <span id="daily-reset" class="daily-reset">${dailyResetText()}</span></div>` +
+    `<div class="objective-title">${challenge.title}</div><div class="objective-desc">${challenge.desc}</div>` +
+    `<div class="objective-track"><div class="objective-fill" style="width:${dailyProgress}%"></div></div>` +
+    `<div class="objective-progress">${fmt(Math.min(dailyState.progress, challenge.target))} / ${fmt(challenge.target)}</div></div>` +
+    `<div class="objective-reward"><span class="reward-value">+${challenge.reward} ✦</span>${dailyAction}</div></article>`;
+  const permanentCards = OBJECTIVES.map(objective => {
+    const value = objectiveValue(objective);
+    const claimed = claimedObjectives.has(objective.id);
+    const ready = objectiveReady(objective);
+    const progress = Math.min(100, value / objective.target * 100);
+    const progressText = `${fmt(Math.min(value, objective.target))} / ${fmt(objective.target)}`;
+    const action = claimed
+      ? '<span class="claimed-mark">CLAIMED</span>'
+      : ready
+        ? `<button class="claim-btn" data-objective="${objective.id}">CLAIM</button>`
+        : '';
+    return `<article class="objective-card${ready ? ' ready' : ''}${claimed ? ' claimed' : ''}">` +
+      `<div class="objective-icon">${objective.icon}</div>` +
+      `<div class="objective-copy"><div class="objective-title">${objective.title}</div>` +
+      `<div class="objective-desc">${objective.desc}</div>` +
+      `<div class="objective-track"><div class="objective-fill" style="width:${progress}%"></div></div>` +
+      `<div class="objective-progress">${progressText}</div></div>` +
+      `<div class="objective-reward"><span class="reward-value">+${objective.reward} ✦</span>${action}</div></article>`;
+  }).join('');
+  list.innerHTML = dailyCard + permanentCards;
+  list.querySelectorAll('.claim-btn[data-objective]').forEach(button =>
+    button.addEventListener('click', () => claimObjective(button.dataset.objective)));
+  list.querySelector('.daily-claim-btn')?.addEventListener('click', claimDailyChallenge);
+  updateObjectiveUI();
+}
+function claimDailyChallenge() {
+  if (!dailyReady()) return false;
+  initAudio();
+  const challenge = dailyChallenge();
+  dailyState.claimed = true;
+  wallet += challenge.reward;
+  saveDailyChallenge();
+  saveCosmetics();
+  updateWalletUI();
+  renderObjectives();
+  sfx.milestone();
+  return true;
+}
+function claimObjective(id) {
+  const objective = OBJECTIVES.find(item => item.id === id);
+  if (!objective || !objectiveReady(objective)) return false;
+  initAudio();
+  claimedObjectives.add(id);
+  wallet += objective.reward;
+  saveObjectives();
+  saveCosmetics();
+  updateWalletUI();
+  renderObjectives();
+  sfx.milestone();
+  return true;
+}
+function recordRunObjectives() {
+  objectiveStats.runs++;
+  objectiveStats.stars += starCount;
+  objectiveStats.hops += hopCount;
+  objectiveStats.bestMeters = Math.max(objectiveStats.bestMeters, Math.round(metersMax));
+  objectiveStats.bestCombo = Math.max(objectiveStats.bestCombo, runMaxCombo);
+  recordDailyChallenge();
+  saveObjectives();
+  updateObjectiveUI();
+}
 function updateWalletUI() {
   document.getElementById('wallet-top-val').textContent = fmt(wallet);
   document.getElementById('wallet-shop').textContent = '✦ ' + fmt(wallet);
+  document.getElementById('wallet-objectives').textContent = '✦ ' + fmt(wallet);
 }
 function renderShop() {
   const grid = document.getElementById('skingrid');
@@ -383,8 +607,10 @@ function selectSkin(s) {
   renderShop();
   updateWalletUI();
 }
-function openShop() { renderShop(); updateWalletUI(); document.body.classList.add('shop'); }
+function openShop() { closeObjectives(); renderShop(); updateWalletUI(); document.body.classList.add('shop'); }
 function closeShop() { document.body.classList.remove('shop'); }
+function openObjectives() { closeShop(); renderObjectives(); updateWalletUI(); document.body.classList.add('objectives'); }
+function closeObjectives() { document.body.classList.remove('objectives'); }
 
 /* ---------------- canvas ---------------- */
 const canvas = document.getElementById('game');
@@ -512,7 +738,12 @@ function setMuted(v) {
   muted = v;
   try { localStorage.setItem('orbita_muted', v ? '1' : '0'); } catch (e) {}
   if (master) master.gain.value = v ? 0 : 1;
-  document.getElementById('btn-mute').textContent = v ? '🔇' : '🔊';
+  const hudButton = document.getElementById('btn-mute');
+  hudButton.textContent = v ? '🔇' : '🔊';
+  hudButton.setAttribute('aria-label', v ? 'Turn sound on' : 'Turn sound off');
+  document.getElementById('menu-sound-icon').textContent = v ? '🔇' : '🔊';
+  document.getElementById('menu-sound-label').textContent = v ? 'Sound off' : 'Sound on';
+  document.getElementById('btn-menu-sound').setAttribute('aria-pressed', String(!v));
 }
 
 /* ---------------- FX ---------------- */
@@ -598,7 +829,7 @@ function ensureSpawns() {
 
 function worldReset(startM) {
   planets = []; starsPick = []; bhs = []; parts = []; texts = [];
-  combo = 0; starPts = 0; starCount = 0; hopCount = 0; lastMile = Math.floor(startM / 500);
+  combo = 0; runMaxCombo = 0; starPts = 0; starCount = 0; hopCount = 0; lastMile = Math.floor(startM / 500);
   metersMax = startM; deathReason = ''; newBest = false;
   timeScale = 1; shake = 0; acc = 0; toastT = 0; toastQueue = [];
   const p0 = {
@@ -639,6 +870,7 @@ function capture(p, d) {
   c.dir = (rx * c.vy - ry * c.vx) >= 0 ? 1 : -1;
   c.orbT = 0; c.invul = 0.5;
   combo = c.quick ? combo + 1 : 1;
+  runMaxCombo = Math.max(runMaxCombo, combo);
   c.quick = false;
   hopCount++;
   if (p.unstable && !p.lit) { p.lit = true; p.fuse = FUSE_TIME; }
@@ -1126,6 +1358,7 @@ function setBodyState() { document.body.dataset.state = state; }
 function startGame() {
   initAudio();
   closeShop();
+  closeObjectives();
   worldReset(0);
   state = 'playing'; setBodyState();
   document.getElementById('combo').style.opacity = 0;
@@ -1136,6 +1369,7 @@ function finishDeath() {
   state = 'dead'; setBodyState();
   deadSince = 0;
   const score = Math.round(metersMax) + starPts;
+  recordRunObjectives();
   newBest = score > best;
   if (newBest) { best = score; try { localStorage.setItem('orbita_best', String(best)); } catch (e) {} }
   document.getElementById('over-reason').textContent = REASONS[deathReason] || '';
@@ -1157,8 +1391,12 @@ function finishDeath() {
   }
 }
 function toMenu() {
+  closeShop();
+  closeObjectives();
   worldReset(0);
   state = 'menu'; setBodyState();
+  updateWalletUI();
+  updateObjectiveUI();
   const bl = document.getElementById('best-line');
   bl.textContent = best > 0 ? `Best run: ${fmt(best)} points` : '';
 }
@@ -1206,10 +1444,12 @@ canvas.addEventListener('contextmenu', e => e.preventDefault());
 window.addEventListener('keydown', e => {
   if (e.repeat) return;
   if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Enter') {
+    if ((e.code === 'Space' || e.code === 'Enter') && e.target instanceof HTMLElement && e.target.closest('button')) return;
     e.preventDefault();
     primaryAction();
   } else if (e.code === 'Escape' || e.code === 'KeyP') {
     if (document.body.classList.contains('shop')) closeShop();
+    else if (document.body.classList.contains('objectives')) closeObjectives();
     else if (state === 'playing') pauseGame();
     else if (state === 'paused') resumeGame();
   } else if (e.code === 'KeyM') {
@@ -1223,8 +1463,11 @@ document.getElementById('btn-resume').addEventListener('click', resumeGame);
 document.getElementById('btn-quit').addEventListener('click', toMenu);
 document.getElementById('btn-pause').addEventListener('click', () => { state === 'playing' ? pauseGame() : resumeGame(); });
 document.getElementById('btn-mute').addEventListener('click', () => setMuted(!muted));
+document.getElementById('btn-menu-sound').addEventListener('click', () => { if (muted) initAudio(); setMuted(!muted); });
 document.getElementById('btn-skins').addEventListener('click', openShop);
 document.getElementById('btn-shop-close').addEventListener('click', closeShop);
+document.getElementById('btn-objectives').addEventListener('click', openObjectives);
+document.getElementById('btn-objectives-close').addEventListener('click', closeObjectives);
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(); });
 window.addEventListener('blur', () => pauseGame());
 
@@ -1245,6 +1488,19 @@ window.GAME = {
   setAutopilot(v) { autopilot = !!v; },
   setTurbo(v) { turbo = clamp(v || 1, 1, 8); },
   cosmetics() { return { wallet, owned: [...ownedSkins], equipped: equippedSkin }; },
+  objectives() {
+    return {
+      stats: { ...objectiveStats }, claimed: [...claimedObjectives], ready: readyObjectiveCount(),
+      items: OBJECTIVES.map(o => ({ ...o, value: objectiveValue(o), ready: objectiveReady(o), claimed: claimedObjectives.has(o.id) }))
+    };
+  },
+  daily() {
+    ensureDailyChallenge();
+    const challenge = dailyChallenge();
+    return { ...challenge, ...dailyState, ready: dailyReady(), reset: dailyResetText() };
+  },
+  claimObjective(id) { return claimObjective(id); },
+  claimDaily() { return claimDailyChallenge(); },
   addStars(n) { wallet += n | 0; saveCosmetics(); updateWalletUI(); renderShop(); },
   equipSkin(id) { if (skinById(id)) { ownedSkins.add(id); equippedSkin = id; saveCosmetics(); updateWalletUI(); } }
 };
@@ -1252,7 +1508,18 @@ window.GAME = {
 /* ---------------- init ---------------- */
 setMuted(muted);
 updateWalletUI();
+updateObjectiveUI();
 toMenu();
+setInterval(() => {
+  const changed = ensureDailyChallenge();
+  if (document.body.classList.contains('objectives')) {
+    if (changed) renderObjectives();
+    else {
+      const reset = document.getElementById('daily-reset');
+      if (reset) reset.textContent = dailyResetText();
+    }
+  } else if (changed) updateObjectiveUI();
+}, 30000);
 requestAnimationFrame(frame);
 </script>
 </body>
